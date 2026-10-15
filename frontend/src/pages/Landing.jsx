@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Bot, Users, Play, LogIn, Sparkles, HelpCircle, Shield, Gavel, Coins } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
-export default function Landing({ onCreateRoom, onJoinRoom }) {
+export default function Landing({ onCreateRoom, onJoinRoom, isConnected, onOpenServerModal }) {
   const [playerName, setPlayerName] = useState('RadiantPlayer');
   const [joinCode, setJoinCode] = useState('');
   const [activeTab, setActiveTab] = useState('solo'); // 'solo' or 'multi'
@@ -113,6 +113,37 @@ export default function Landing({ onCreateRoom, onJoinRoom }) {
           {/* Tab Content: Multi Mode */}
           {activeTab === 'multi' && (
             <div className="tab-pane multi-pane">
+              {!isConnected && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '8px 12px',
+                  background: 'rgba(243, 178, 58, 0.1)',
+                  border: '1px solid rgba(243, 178, 58, 0.3)',
+                  borderRadius: 'var(--radius-sm)',
+                  marginBottom: '10px',
+                  fontSize: '0.8rem',
+                  color: 'var(--val-gold)'
+                }}>
+                  <span>Server offline or waking up.</span>
+                  <button 
+                    type="button" 
+                    onClick={onOpenServerModal}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--val-cyan)',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      fontSize: '0.8rem',
+                      fontWeight: '700'
+                    }}
+                  >
+                    Configure Server
+                  </button>
+                </div>
+              )}
               <button 
                 className="btn-val w-full btn-large"
                 onClick={handleCreateMulti}
@@ -120,6 +151,7 @@ export default function Landing({ onCreateRoom, onJoinRoom }) {
                 <Users size={20} />
                 <span>CREATE LOBBY & GET CODE</span>
               </button>
+
 
               <div className="or-divider font-display">
                 <span>OR JOIN EXISTING ROOM</span>

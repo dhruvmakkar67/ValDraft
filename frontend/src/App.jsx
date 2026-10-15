@@ -4,6 +4,7 @@ import { sounds } from './utils/audio';
 
 import Navbar from './components/Navbar';
 import ApiKeyModal from './components/ApiKeyModal';
+import ServerModal from './components/ServerModal';
 import Landing from './pages/Landing';
 import Lobby from './pages/Lobby';
 import Draft from './pages/Draft';
@@ -22,7 +23,9 @@ export default function App() {
   const [actionError, setActionError] = useState('');
   const [aiResult, setAiResult] = useState(null);
   const [isApiKeyModalOpen, setIsApiKeyModalOpen] = useState(false);
+  const [isServerModalOpen, setIsServerModalOpen] = useState(false);
   const [isLocalMode, setIsLocalMode] = useState(false);
+
 
   const localEngineRef = React.useRef(null);
 
@@ -185,9 +188,12 @@ export default function App() {
         <Landing 
           onCreateRoom={handleCreateRoom}
           onJoinRoom={handleJoinRoom}
+          isConnected={isConnected}
+          onOpenServerModal={() => setIsServerModalOpen(true)}
         />
       );
     }
+
 
     if (room.status === 'lobby') {
       return (
@@ -230,6 +236,7 @@ export default function App() {
       <Navbar 
         roomCode={room?.room_code}
         onOpenApiKeyModal={() => setIsApiKeyModalOpen(true)}
+        onOpenServerModal={() => setIsServerModalOpen(true)}
         isConnected={isConnected}
         isLocalMode={isLocalMode}
       />
@@ -242,6 +249,13 @@ export default function App() {
         isOpen={isApiKeyModalOpen}
         onClose={() => setIsApiKeyModalOpen(false)}
       />
+
+      <ServerModal
+        isOpen={isServerModalOpen}
+        onClose={() => setIsServerModalOpen(false)}
+        isConnected={isConnected}
+      />
     </div>
   );
 }
+

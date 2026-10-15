@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Key, Shield, Radio } from 'lucide-react';
+import { Volume2, VolumeX, Key, Shield, Radio, Server } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
-export default function Navbar({ roomCode, onOpenApiKeyModal, isConnected, isLocalMode }) {
+export default function Navbar({ roomCode, onOpenApiKeyModal, onOpenServerModal, isConnected, isLocalMode }) {
   const [muted, setMuted] = useState(sounds.muted);
 
   const toggleAudio = () => {
@@ -36,16 +36,35 @@ export default function Navbar({ roomCode, onOpenApiKeyModal, isConnected, isLoc
 
       <div className="nav-right">
         {isLocalMode ? (
-          <div className="status-pill online">
+          <div 
+            className="status-pill online" 
+            onClick={onOpenServerModal}
+            title="Click to configure backend server for multiplayer"
+            style={{ cursor: 'pointer' }}
+          >
             <Radio size={14} className="pulse-icon" />
             <span className="font-display">SOLO READY</span>
           </div>
         ) : (
-          <div className={`status-pill ${isConnected ? 'online' : 'offline'}`}>
+          <div 
+            className={`status-pill ${isConnected ? 'online' : 'offline'}`}
+            onClick={onOpenServerModal}
+            title="Click to configure backend server connection"
+            style={{ cursor: 'pointer' }}
+          >
             <Radio size={14} className={isConnected ? 'pulse-icon' : ''} />
             <span className="font-display">{isConnected ? 'LIVE SYNC' : 'OFFLINE'}</span>
           </div>
         )}
+
+        <button 
+          className="icon-btn" 
+          onClick={onOpenServerModal} 
+          title="Configure Multiplayer Backend Server"
+        >
+          <Server size={18} />
+          <span className="btn-label font-display">SERVER</span>
+        </button>
 
         <button 
           className="icon-btn" 
@@ -67,3 +86,4 @@ export default function Navbar({ roomCode, onOpenApiKeyModal, isConnected, isLoc
     </header>
   );
 }
+
