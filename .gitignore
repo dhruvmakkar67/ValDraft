@@ -1,0 +1,28 @@
+# Dependencies
+node_modules
+dist
+dist-ssr
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.env
+
+# Vercel
+.vercel
+
+# IDE / Logs
+.system_generated/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+test_screenshots/
+scratch_chrome/
+
+.vercel
